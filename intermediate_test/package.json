@@ -1,0 +1,19 @@
+{
+  "name": "intermediate_test",
+  "version": "1.0.0",
+  "description": "intermediate test task from kodecamp 3.0 internship",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "middleware",
+    "route",
+    "file system",
+    "server",
+    "API"
+  ],
+  "author": "saad saheed",
+  "license": "ISC"
+}
