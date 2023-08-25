@@ -14,7 +14,7 @@ console.log(CatalogIterator.next());
 
 
 console.log("\n\nLIBRARY CATALOG BOOK ITERABLE:\n");
-for (const book of catalog1.symbolIterator) {
+for (const book of catalog1) {
     console.log(book);
 }
 
