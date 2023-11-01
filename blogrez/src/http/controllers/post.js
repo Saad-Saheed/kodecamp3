@@ -9,33 +9,62 @@ import ApiCustomError from "../errors/api-custom-error.js";
 
 class PostController {
   index = asyncWrapper(async (req, res) => {
-    let { tags, q } = req.query;
+    let { tags, q, page, pageSize } = req.query;
+    page = parseInt(page, 10) || 1;
+    pageSize = parseInt(pageSize, 10) || 2;
 
     if (tags && tags.length) {
       tags = tags.split(",");
       tags = tags.map((tag) => tag.toString().trim().toLowerCase());
     }
 
-    let filter;
+    let query = {};
 
-    if (!tags && !q) {
-      filter = [{ id: { gt: 0 } }];
-    } else {
-      filter = [
-        { title: { contains: q?.trim() } },
-        { tags: { hasSome: tags ?? [] } },
-      ];
+    let where = {};
+
+    if (q) {
+      // if(tags)
+      //   filter.where.OR["title"] = { contains: q?.trim() };
+      // else
+        where.title = { contains: q?.trim() };
+      query = { ...query, where};
     }
 
-    const posts = await database.post.findMany({
-      where: {
-        OR: filter,
-      },
-    });
+    if (tags) {
+      // if(q)
+      //   filter.where.OR["tags"] = { hasSome: tags ?? [] }
+      // else
+        where.tags = { hasSome: tags ?? [] }
+      query = { ...query, where};
+    }
+
+    // pagination
+    let offset = (page - 1) * pageSize;
+    query.skip = offset;
+    query.take = pageSize;
+
+    // get rowCount, then get post filtering and pagination
+    const [count, posts] = await Promise.all([
+      database.post.count({where}),
+      database.post.findMany(query)
+    ]);
+    
+
+    let totalPage = Math.ceil(count / pageSize);
+
+    let pagination = {
+      currentPage: page,
+      pageSize,
+      totalPage,
+      previousPageUrl: page > 1 ? `${req.protocol}://${req.headers.host}/api/posts?page=${(page - 1)}` :  null,
+      nextPageUrl: page < totalPage ? `${req.protocol}://${req.headers.host}/api/posts?page=${(page + 1)}` :  null,
+    }
+
     return res.status(StatusCodes.OK).json({
       status: "success",
       message: "Posts fetched successfully",
-      data: posts,
+      data: posts, 
+      pagination
     });
   });
 
