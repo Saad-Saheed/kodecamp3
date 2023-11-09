@@ -1,7 +1,7 @@
-"use-strict";
+'use-strict';
 
-class ApiCustomError extends Error{
-    constructor(message, statusCode){
+class ApiCustomError extends Error {
+    constructor(message, statusCode) {
         super(message);
         this.message = message;
         this.statusCode = statusCode;

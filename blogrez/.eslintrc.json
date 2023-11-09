@@ -1,0 +1,26 @@
+{
+    "env": {
+        "browser": true,
+        "es2021": true,
+        "node": true
+    },
+    "plugins": ["prettier", "no-loops"],
+    "extends": ["eslint:recommended", "prettier"],
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    },
+    "rules": {
+        "no-tabs": ["error", {"allowIndentationTab": true}],
+        "prettier/prettier": "error",
+        "no-loops/no-loops": "error",
+        "no-console":"warn",
+        "no-use-before-define": ["error", { "functions": true, "classes": true }],
+        "prefer-const": "error"        
+    },
+    "ignorePatterns": [
+        "node_modules",
+        "test",
+        "build"
+    ]
+}
