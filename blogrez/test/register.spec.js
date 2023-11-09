@@ -2,6 +2,7 @@ import supertest from "supertest";
 import assert from "assert";
 import app from "../src/index.js";
 import { database } from "../src/libs/prisma.js";
+import { before, after, describe, it } from "mocha";
 
 const request = supertest(app);
 
@@ -12,7 +13,7 @@ describe("Registration Testing...", ()=>{
         try {
             await database.user.delete({where: {username: "Jamiu"}});
         } catch (error) {
-            
+            console.log(error);
         }
     });
 
@@ -21,14 +22,14 @@ describe("Registration Testing...", ()=>{
         try {
             await database.user.delete({where: {username: "Jamiu"}});
         } catch (error) {
-            
+            console.log(error);
         }
     });
    
     // register failed when username or password is invalid/missing
     it("must failed when username or password is invalid/missing", async()=>{
         // password length < 8, username exist, password doesn't match, then it must return 422
-        const response = await request.post("/api/auth/register").send({
+        await request.post("/api/auth/register").send({
             "username": "Jamiu",
             "password": "123456",
             "password_confirmation": "12345678"

@@ -1,4 +1,4 @@
-"use-strict";
+'use-strict';
 
 import express from 'express';
 import dotenv from 'dotenv';
@@ -17,13 +17,15 @@ const app = express();
 // pass body to json
 app.use(express.json());
 // allow cross origin resource
-app.use(cors({
-    origin: "*",
-    optionsSuccessStatus: "200"
-}));
+app.use(
+    cors({
+        origin: '*',
+        optionsSuccessStatus: '200',
+    }),
+);
 
 // home route
-app.use('/', express.static("public"));
+app.use('/', express.static('public'));
 
 // api routes
 app.use('/api', routes);
@@ -32,7 +34,7 @@ app.use(errorHandler);
 // not found
 app.use(notFound);
 
-app.listen(PORT, ()=>{
+app.listen(PORT, () => {
     console.log(`Server running on ${APP_URL}`);
 });
 

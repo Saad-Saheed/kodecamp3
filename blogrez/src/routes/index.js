@@ -1,8 +1,8 @@
-"use-strict";
+'use-strict';
 
-import { Router } from "express";
+import { Router } from 'express';
 import authRoutes from './auth/index.js';
-import postRoutes from "./post.js";
+import postRoutes from './post.js';
 
 const routes = Router();
 routes.use('/auth', authRoutes);

@@ -1,6 +1,7 @@
 import supertest from "supertest";
 import assert from "assert";
 import app from "../src/index.js";
+import { before, describe, it } from "mocha";
 
 const request = supertest(app);
 
@@ -15,7 +16,7 @@ describe("Login Testing...", () => {
                     "password_confirmation": "12345678"
                 });
             } catch (error) {
-    
+                console.log(error);
             }
         });
     
